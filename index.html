@@ -1,301 +1,314 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SNS 사용 조절 앱</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocraTech</title>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Pretendard", sans-serif;
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#f3f5f7;
     }
 
-    body {
-      background: #f4f6fb;
-      color: #222;
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
+    header{
+      background:#1f2937;
+      color:white;
+      padding:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
     }
 
-    .phone {
-      width: 390px;
-      background: white;
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    .menu{
+      font-size:24px;
+      cursor:pointer;
     }
 
-    .header {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: white;
-      padding: 30px 25px;
+    .login-btn{
+      background:white;
+      color:#1f2937;
+      border:none;
+      padding:8px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
     }
 
-    .header h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+    .chat-container{
+      max-width:800px;
+      margin:30px auto;
+      background:white;
+      border-radius:20px;
+      padding:25px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.1);
     }
 
-    .header p {
-      opacity: 0.9;
-      line-height: 1.5;
+    .message{
+      margin-bottom:20px;
+      line-height:1.6;
     }
 
-    .content {
-      padding: 24px;
+    .bot{
+      color:#2563eb;
+      font-weight:bold;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    .user{
+      color:#111827;
+      font-weight:bold;
     }
 
-    .card h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
+    .choices{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:20px;
     }
 
-    .usage-time {
-      font-size: 42px;
-      font-weight: bold;
-      color: #4f46e5;
-      margin-bottom: 10px;
+    button.choice-btn{
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#e5e7eb;
+      cursor:pointer;
+      transition:0.2s;
+      text-align:left;
+      font-size:15px;
     }
 
-    .progress-container {
-      width: 100%;
-      height: 14px;
-      background: #e5e7eb;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 10px;
+    button.choice-btn:hover{
+      background:#cbd5e1;
     }
 
-    .progress {
-      width: 70%;
-      height: 100%;
-      background: linear-gradient(90deg, #4f46e5, #7c3aed);
-      transition: 0.4s;
+    .report{
+      margin-top:30px;
+      padding:20px;
+      background:#eff6ff;
+      border-radius:15px;
     }
 
-    .app-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .graph{
+      height:20px;
+      background:#dbeafe;
+      border-radius:10px;
+      margin-bottom:12px;
+      overflow:hidden;
     }
 
-    .app-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .app-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .icon {
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .instagram { background: #ec4899; }
-    .youtube { background: #ef4444; }
-    .tiktok { background: #111827; }
-
-    .warning {
-      background: #fef2f2;
-      border: 2px solid #f87171;
-      color: #991b1b;
-    }
-
-    .warning h3 {
-      margin-bottom: 8px;
-    }
-
-    .btn {
-      width: 100%;
-      border: none;
-      padding: 16px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .slow-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-    }
-
-    .slow-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .focus-btn {
-      margin-top: 12px;
-      background: #4f46e5;
-      color: white;
-    }
-
-    .status {
-      margin-top: 14px;
-      text-align: center;
-      font-weight: bold;
-      color: #dc2626;
-    }
-
-    .footer {
-      text-align: center;
-      color: #6b7280;
-      font-size: 13px;
-      margin-top: 8px;
-      line-height: 1.5;
+    .fill{
+      height:100%;
+      background:#2563eb;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="phone">
+<header>
+  <div class="menu">☰</div>
+  <h2>SocraTech</h2>
+  <button class="login-btn">로그인</button>
+</header>
 
-    <div class="header">
-      <h1>Focus SNS</h1>
-      <p>
-        SNS 사용 시간을 분석하고<br>
-        과도한 사용을 줄여주는 집중 관리 앱
-      </p>
+<div class="chat-container">
+
+  <div id="chat"></div>
+
+  <div class="choices" id="choices"></div>
+
+</div>
+
+<script>
+
+const steps = [
+
+  {
+    question:
+    "요즘 가장 고민되는 문제는 무엇인가요?",
+
+    choices:[
+      {
+        text:"진로가 너무 불안해요",
+        reply:"미래에 대한 불안이 크군요. 그런데 완벽하게 확신할 수 있는 진로가 정말 존재할까요?"
+      },
+      {
+        text:"공부 의욕이 없어요",
+        reply:"의욕이 없다는 건 흥미를 잃었다는 의미일까요, 아니면 지쳤다는 의미일까요?"
+      },
+      {
+        text:"인간관계가 힘들어요",
+        reply:"사람들과의 관계에서 가장 힘든 순간은 어떤 상황인가요?"
+      }
+    ]
+  },
+
+  {
+    question:
+    "그 문제에서 가장 큰 원인은 무엇이라고 생각하나요?",
+
+    choices:[
+      {
+        text:"내 자신감 부족",
+        reply:"자신감 부족이라고 정의했군요. 그렇다면 자신감은 정확히 어떤 상태를 의미하나요?"
+      },
+      {
+        text:"주변 환경",
+        reply:"환경 때문이라고 느끼는군요. 하지만 환경이 같아도 다르게 행동하는 사람도 있지 않을까요?"
+      },
+      {
+        text:"실패 경험",
+        reply:"과거 경험이 영향을 준 것 같군요. 그 경험이 지금의 선택까지 제한하고 있을까요?"
+      }
+    ]
+  },
+
+  {
+    question:
+    "스스로 바꾸고 싶은 부분은 무엇인가요?",
+
+    choices:[
+      {
+        text:"생각하는 습관",
+        reply:"좋아요. 그렇다면 평소 어떤 순간에 깊게 생각하지 않고 결론을 내리나요?"
+      },
+      {
+        text:"행동 방식",
+        reply:"행동을 바꾸고 싶군요. 작은 행동 하나만 바꾼다면 무엇부터 시작할 수 있을까요?"
+      },
+      {
+        text:"감정 조절",
+        reply:"감정 조절이 중요하다고 느끼는군요. 감정이 가장 흔들리는 상황은 언제인가요?"
+      }
+    ]
+  },
+
+  {
+    question:
+    "지금 가장 필요한 것은 무엇이라고 생각하나요?",
+
+    choices:[
+      {
+        text:"명확한 목표",
+        reply:"목표가 필요하군요. 그렇다면 정말 원하는 목표는 남의 기대인가요, 자신의 선택인가요?"
+      },
+      {
+        text:"휴식",
+        reply:"휴식이 필요하군요. 쉬지 못하게 만드는 가장 큰 이유는 무엇인가요?"
+      },
+      {
+        text:"새로운 도전",
+        reply:"새로운 도전을 원하네요. 실패 가능성이 있어도 도전하고 싶은 이유는 무엇인가요?"
+      }
+    ]
+  }
+
+];
+
+let currentStep = 0;
+
+const chat = document.getElementById("chat");
+const choicesDiv = document.getElementById("choices");
+
+function addMessage(sender,text){
+
+  const div = document.createElement("div");
+  div.className = "message";
+
+  div.innerHTML = `<span class="${sender}">
+  ${sender === "bot" ? "SocraTech" : "나"}
+  </span> : ${text}`;
+
+  chat.appendChild(div);
+
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function showStep(){
+
+  choicesDiv.innerHTML = "";
+
+  if(currentStep >= steps.length){
+    showReport();
+    return;
+  }
+
+  const step = steps[currentStep];
+
+  addMessage("bot", step.question);
+
+  step.choices.forEach(choice => {
+
+    const btn = document.createElement("button");
+    btn.className = "choice-btn";
+    btn.innerText = choice.text;
+
+    btn.onclick = () => {
+
+      addMessage("user", choice.text);
+
+      setTimeout(() => {
+        addMessage("bot", choice.reply);
+
+        currentStep++;
+
+        setTimeout(() => {
+          showStep();
+        }, 1000);
+
+      }, 500);
+    };
+
+    choicesDiv.appendChild(btn);
+
+  });
+}
+
+function showReport(){
+
+  choicesDiv.innerHTML = "";
+
+  const report = document.createElement("div");
+  report.className = "report";
+
+  report.innerHTML = `
+    <h2>🧠 나의 상위 인지 성장 리포트</h2>
+
+    <p>
+    당신은 대화를 통해 자신의 문제를 단순 감정이 아닌
+    원인과 행동 관점에서 다시 바라보기 시작했습니다.
+    </p>
+
+    <h3>인지 영역 성장</h3>
+
+    <p>비판적 사고력</p>
+    <div class="graph">
+      <div class="fill" style="width:85%"></div>
     </div>
 
-    <div class="content">
-
-      <div class="card">
-        <h2>오늘의 SNS 사용 시간</h2>
-        <div class="usage-time" id="usageText">2시간 10분</div>
-        <p>목표 사용 시간: 1시간 30분</p>
-
-        <div class="progress-container">
-          <div class="progress" id="progressBar"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>앱별 사용 현황</h2>
-
-        <div class="app-list">
-
-          <div class="app-item">
-            <div class="app-info">
-              <div class="icon instagram">I</div>
-              <div>
-                <strong>Instagram</strong><br>
-                58분 사용
-              </div>
-            </div>
-            <span>⚠️</span>
-          </div>
-
-          <div class="app-item">
-            <div class="app-info">
-              <div class="icon youtube">Y</div>
-              <div>
-                <strong>YouTube Shorts</strong><br>
-                42분 사용
-              </div>
-            </div>
-            <span>⚠️</span>
-          </div>
-
-          <div class="app-item">
-            <div class="app-info">
-              <div class="icon tiktok">T</div>
-              <div>
-                <strong>TikTok</strong><br>
-                30분 사용
-              </div>
-            </div>
-            <span>정상</span>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card warning">
-        <h3>⚠ SNS 과다 사용 감지</h3>
-        <p>
-          설정한 사용 시간을 초과했습니다.<br>
-          집중 모드를 활성화하시겠습니까?
-        </p>
-      </div>
-
-      <button class="btn slow-btn" onclick="activateSlowMode()">
-        인터넷 속도 제한 모드 활성화
-      </button>
-
-      <button class="btn focus-btn" onclick="startFocusMode()">
-        30분 집중 모드 시작
-      </button>
-
-      <div class="status" id="statusText"></div>
-
-      <div class="footer">
-        창의적 공학입문 설계 프로젝트<br>
-        SNS 중독 예방 및 사용 습관 개선 시스템
-      </div>
-
+    <p>문해력</p>
+    <div class="graph">
+      <div class="fill" style="width:70%"></div>
     </div>
-  </div>
 
-  <script>
+    <p>인지적 유연성</p>
+    <div class="graph">
+      <div class="fill" style="width:90%"></div>
+    </div>
 
-    let slowMode = false;
+    <p>메타인지</p>
+    <div class="graph">
+      <div class="fill" style="width:80%"></div>
+    </div>
+  `;
 
-    function activateSlowMode() {
-      const status = document.getElementById("statusText");
+  chat.appendChild(report);
+}
 
-      slowMode = !slowMode;
+showStep();
 
-      if (slowMode) {
-        status.innerHTML = "🚫 SNS 제한 모드 활성화됨 - 인터넷 속도 감소";
-      } else {
-        status.innerHTML = "✅ 제한 모드 해제됨";
-      }
-    }
-
-    function startFocusMode() {
-      const status = document.getElementById("statusText");
-      status.innerHTML = "⏳ 30분 집중 모드가 시작되었습니다.";
-    }
-
-    // 가짜 실시간 사용량 증가 효과
-    let progress = 70;
-
-    setInterval(() => {
-      if (progress < 100) {
-        progress += 1;
-        document.getElementById("progressBar").style.width = progress + "%";
-      }
-    }, 5000);
-
-  </script>
+</script>
 
 </body>
 </html>
