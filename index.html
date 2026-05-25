@@ -20,6 +20,9 @@ body{
     color:white;
     display:flex;
     height:100vh;
+    overflow:hidden;
+    background-size:cover;
+    background-position:center;
 }
 
 /* 사이드바 */
@@ -85,6 +88,7 @@ body{
     flex:1;
     display:flex;
     flex-direction:column;
+    backdrop-filter:blur(5px);
 }
 
 /* 상단바 */
@@ -96,6 +100,7 @@ body{
     justify-content:space-between;
     align-items:center;
     padding:0 25px;
+    background:rgba(23,23,23,0.9);
 }
 
 .ai-name{
@@ -110,6 +115,30 @@ body{
     padding:10px 18px;
     border-radius:10px;
     cursor:pointer;
+}
+
+/* 설정창 */
+
+#settingsPanel{
+    display:none;
+    padding:20px;
+    background:#1e1e1e;
+    border-bottom:1px solid #333;
+}
+
+.colorContainer{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.colorBtn{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    border:2px solid white;
 }
 
 /* 채팅 영역 */
@@ -306,6 +335,65 @@ body{
 
     </div>
 
+    <!-- 설정창 -->
+
+    <div id="settingsPanel">
+
+        <h3 style="margin-bottom:20px;">
+            ⚙️ 대화창 설정
+        </h3>
+
+        <p style="margin-bottom:10px;">
+            채팅 색상
+        </p>
+
+        <div class="colorContainer">
+
+            <div class="colorBtn" style="background:#10a37f;" onclick="changeTheme('#10a37f')"></div>
+            <div class="colorBtn" style="background:#3b82f6;" onclick="changeTheme('#3b82f6')"></div>
+            <div class="colorBtn" style="background:#ef4444;" onclick="changeTheme('#ef4444')"></div>
+            <div class="colorBtn" style="background:#f59e0b;" onclick="changeTheme('#f59e0b')"></div>
+            <div class="colorBtn" style="background:#8b5cf6;" onclick="changeTheme('#8b5cf6')"></div>
+            <div class="colorBtn" style="background:#ec4899;" onclick="changeTheme('#ec4899')"></div>
+            <div class="colorBtn" style="background:#14b8a6;" onclick="changeTheme('#14b8a6')"></div>
+            <div class="colorBtn" style="background:#84cc16;" onclick="changeTheme('#84cc16')"></div>
+            <div class="colorBtn" style="background:#f97316;" onclick="changeTheme('#f97316')"></div>
+            <div class="colorBtn" style="background:#ffffff;" onclick="changeTheme('#ffffff')"></div>
+
+        </div>
+
+        <p style="margin-bottom:10px;">
+            배경 사진 변경
+        </p>
+
+        <input type="file"
+        accept="image/*"
+        onchange="changeBackground(event)"
+        style="margin-bottom:25px; color:white;">
+
+        <p style="margin-bottom:10px;">
+            챗봇 말투
+        </p>
+
+        <select onchange="changeTone(this.value)"
+        style="padding:10px; border-radius:10px;">
+
+            <option value="formal">
+                예의있게
+            </option>
+
+            <option value="kind">
+                상냥하게
+            </option>
+
+            <option value="friendly">
+                친근하게
+            </option>
+
+        </select>
+
+    </div>
+
     <div class="chat-area" id="chatArea">
 
     </div>
@@ -323,6 +411,10 @@ const choicesDiv = document.getElementById("choices");
 const historyList = document.getElementById("historyList");
 
 let current = 0;
+
+let currentTheme = "#10a37f";
+let currentTone = "formal";
+
 let currentConversationHTML = "";
 
 const steps = [
@@ -374,7 +466,7 @@ const steps = [
 },
 
 {
-    question:"마지막으로, 지금 당신에게 가장 필요한 것은 무엇인가요?",
+    question:"마지막으로, 지금 당신에게 가장 필요한 것은 무엇이라고 생각하나요?",
 
     choices:[
 
@@ -444,6 +536,32 @@ function showStartScreen(){
 
 }
 
+/* 말투 적용 */
+
+function applyTone(text){
+
+    if(currentTone === "kind"){
+
+        return "😊 " + text
+        .replaceAll("무엇인가요?", "무엇일까요?")
+        .replaceAll("생각하나요?", "생각하시나요?")
+        .replaceAll("있을까요?", "있을까요? 천천히 생각해봐도 좋아요.");
+
+    }
+
+    if(currentTone === "friendly"){
+
+        return "😄 " + text
+        .replaceAll("무엇인가요?", "뭘까?")
+        .replaceAll("생각하나요?", "어떻게 생각해?")
+        .replaceAll("있을까요?", "있을까?");
+
+    }
+
+    return text;
+
+}
+
 /* 대화 시작 */
 
 function startConversation(text){
@@ -477,7 +595,21 @@ function addMessage(text,type){
     msg.classList.add("message");
     msg.classList.add(type);
 
-    msg.innerHTML = text;
+    if(type === "bot"){
+
+        msg.innerHTML = applyTone(text);
+
+    }else{
+
+        msg.innerHTML = text;
+
+    }
+
+    if(type === "user"){
+
+        msg.style.background = currentTheme;
+
+    }
 
     chatArea.appendChild(msg);
 
@@ -556,23 +688,38 @@ function showReport(){
 
         <p>비판적 사고력</p>
         <div class="bar">
-            <div class="fill" style="width:85%"></div>
+            <div class="fill" style="width:85%; background:${currentTheme};"></div>
         </div>
 
         <p>문해력</p>
         <div class="bar">
-            <div class="fill" style="width:72%"></div>
+            <div class="fill" style="width:72%; background:${currentTheme};"></div>
         </div>
 
         <p>인지적 유연성</p>
         <div class="bar">
-            <div class="fill" style="width:90%"></div>
+            <div class="fill" style="width:90%; background:${currentTheme};"></div>
         </div>
 
         <p>메타인지</p>
         <div class="bar">
-            <div class="fill" style="width:80%"></div>
+            <div class="fill" style="width:80%; background:${currentTheme};"></div>
         </div>
+
+        <br><br>
+
+        <button onclick="openSettings()"
+        style="
+        background:${currentTheme};
+        color:white;
+        border:none;
+        padding:14px 20px;
+        border-radius:12px;
+        cursor:pointer;
+        font-size:15px;
+        ">
+            ⚙️ 대화창 설정 열기
+        </button>
 
     `;
 
@@ -618,6 +765,79 @@ function resetChat(){
     choicesDiv.innerHTML = "";
 
     showStartScreen();
+
+}
+
+/* 설정창 */
+
+function openSettings(){
+
+    const panel =
+    document.getElementById("settingsPanel");
+
+    if(panel.style.display === "none"){
+
+        panel.style.display = "block";
+
+    }else{
+
+        panel.style.display = "none";
+
+    }
+
+}
+
+/* 색상 변경 */
+
+function changeTheme(color){
+
+    currentTheme = color;
+
+    document.querySelectorAll(".user").forEach(msg=>{
+
+        msg.style.background = color;
+
+    });
+
+    document.querySelectorAll(".fill").forEach(bar=>{
+
+        bar.style.background = color;
+
+    });
+
+}
+
+/* 배경 변경 */
+
+function changeBackground(event){
+
+    const file = event.target.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            document.body.style.backgroundImage =
+            `url(${e.target.result})`;
+
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+
+        }
+
+        reader.readAsDataURL(file);
+
+    }
+
+}
+
+/* 말투 변경 */
+
+function changeTone(tone){
+
+    currentTone = tone;
 
 }
 
