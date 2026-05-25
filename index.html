@@ -34,6 +34,59 @@ body{
     transition:0.3s;
 }
 
+/* 로그인 */
+
+.login-screen{
+    position:fixed;
+    inset:0;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.login-box{
+    width:360px;
+    background:#1f1f1f;
+    padding:35px;
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.login-title{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+.login-box input{
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#2b2b2b;
+    color:white;
+}
+
+.login-box button{
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#10a37f;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.login-message{
+    text-align:center;
+    font-size:14px;
+    color:#bbb;
+}
+
 /* 사이드바 */
 
 .sidebar{
@@ -52,6 +105,12 @@ body{
     margin-bottom:20px;
 }
 
+.user-info{
+    margin-bottom:20px;
+    color:#ccc;
+    font-size:14px;
+}
+
 .new-chat{
     background:var(--chatbot-color);
     color:white;
@@ -61,10 +120,6 @@ body{
     cursor:pointer;
     margin-bottom:20px;
     transition:0.2s;
-}
-
-.new-chat:hover{
-    opacity:0.85;
 }
 
 .history-title{
@@ -85,18 +140,10 @@ body{
     padding:12px;
     border-radius:10px;
     cursor:pointer;
-    transition:0.2s;
     font-size:14px;
 }
 
-.history-item:hover{
-    opacity:0.8;
-}
-
-/* 설정 버튼 */
-
 .setting-toggle{
-
     margin-top:auto;
     background:var(--chatbot-color);
     color:white;
@@ -105,30 +152,16 @@ body{
     border-radius:12px;
     cursor:pointer;
     margin-bottom:10px;
-    transition:0.2s;
-
-}
-
-.setting-toggle:hover{
-
-    opacity:0.8;
-
 }
 
 /* 설정창 */
 
 .settings-box{
-
     display:none;
-
     background:var(--chatbot-color);
-
     padding:15px;
-
     border-radius:15px;
-
     animation:fade 0.2s ease;
-
 }
 
 .settings-box h3{
@@ -171,8 +204,6 @@ body{
     flex-direction:column;
 }
 
-/* 상단바 */
-
 .topbar{
     height:70px;
     background:rgba(0,0,0,0.2);
@@ -189,7 +220,7 @@ body{
     font-weight:bold;
 }
 
-.login-btn{
+.logout-btn{
     background:var(--main-color);
     border:none;
     color:white;
@@ -198,7 +229,7 @@ body{
     cursor:pointer;
 }
 
-/* 채팅 영역 */
+/* 채팅 */
 
 .chat-area{
     flex:1;
@@ -208,8 +239,6 @@ body{
     flex-direction:column;
     gap:20px;
 }
-
-/* 시작 화면 */
 
 .start-screen{
     height:100%;
@@ -242,16 +271,8 @@ body{
     border-radius:16px;
     cursor:pointer;
     text-align:left;
-    transition:0.2s;
     font-size:16px;
 }
-
-.start-btn:hover{
-    opacity:0.85;
-    transform:translateY(-2px);
-}
-
-/* 메시지 */
 
 .message{
     max-width:70%;
@@ -271,24 +292,10 @@ body{
     align-self:flex-end;
 }
 
-@keyframes fade{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* 선택지 */
-
 .choices{
     padding:20px;
     border-top:1px solid rgba(255,255,255,0.08);
     background:rgba(0,0,0,0.15);
-    backdrop-filter:blur(10px);
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -302,14 +309,7 @@ body{
     border-radius:14px;
     cursor:pointer;
     text-align:left;
-    transition:0.2s;
 }
-
-.choice-btn:hover{
-    opacity:0.8;
-}
-
-/* 리포트 */
 
 .report{
     background:var(--chatbot-color);
@@ -331,28 +331,51 @@ body{
     background:var(--main-color);
 }
 
-/* 모바일 */
-
-@media(max-width:768px){
-
-    .sidebar{
-        display:none;
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
     }
-
-    .message{
-        max-width:90%;
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
-
-    .start-title{
-        font-size:30px;
-    }
-
 }
 
 </style>
 </head>
 
 <body>
+
+<!-- 로그인 화면 -->
+
+<div class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+        <div class="login-title">
+            SocraTech AI
+        </div>
+
+        <input type="text"
+        id="username"
+        placeholder="아이디 입력">
+
+        <input type="password"
+        id="password"
+        placeholder="비밀번호 입력">
+
+        <button onclick="login()">
+            로그인 / 회원가입
+        </button>
+
+        <div class="login-message">
+            처음 입력한 계정은 자동 회원가입됩니다.
+        </div>
+
+    </div>
+
+</div>
 
 <!-- 사이드바 -->
 
@@ -362,22 +385,32 @@ body{
         SocraTech
     </div>
 
-    <button class="new-chat" onclick="resetChat()">
+    <div class="user-info"
+    id="userInfo">
+        로그인 안됨
+    </div>
+
+    <button class="new-chat"
+    onclick="resetChat()">
+
         + 새 대화
+
     </button>
 
     <div class="history-title">
         이전 대화
     </div>
 
-    <div class="history-list" id="historyList"></div>
+    <div class="history-list"
+    id="historyList"></div>
 
     <!-- 설정 버튼 -->
 
     <button class="setting-toggle"
+    id="settingToggle"
     onclick="toggleSettings()">
 
-    ⚙️ 설정 열기
+        ⚙️ 설정 열기
 
     </button>
 
@@ -392,35 +425,61 @@ body{
 
         <div class="colorContainer">
 
-            <div class="colorBtn" style="background:#10a37f"
-            onclick="changeTheme('#10a37f','#10271f','#064e3b')"></div>
+            <!-- 기본 검정 -->
 
-            <div class="colorBtn" style="background:#3b82f6"
-            onclick="changeTheme('#3b82f6','#111c2f','#1d4ed8')"></div>
+            <div class="colorBtn"
+            style="background:#212121"
+            onclick="changeTheme(
+            '#10a37f',
+            '#212121',
+            '#2b2b2b',
+            'white'
+            )"></div>
 
-            <div class="colorBtn" style="background:#ef4444"
-            onclick="changeTheme('#ef4444','#2a1111','#7f1d1d')"></div>
+            <div class="colorBtn"
+            style="background:#ef4444"
+            onclick="changeTheme(
+            '#ef4444',
+            '#2a1111',
+            '#7f1d1d',
+            'white'
+            )"></div>
 
-            <div class="colorBtn" style="background:#f59e0b"
-            onclick="changeTheme('#f59e0b','#2f2110','#92400e')"></div>
+            <div class="colorBtn"
+            style="background:#3b82f6"
+            onclick="changeTheme(
+            '#3b82f6',
+            '#111c2f',
+            '#1d4ed8',
+            'white'
+            )"></div>
 
-            <div class="colorBtn" style="background:#8b5cf6"
-            onclick="changeTheme('#8b5cf6','#1f1635','#5b21b6')"></div>
+            <div class="colorBtn"
+            style="background:#f59e0b"
+            onclick="changeTheme(
+            '#f59e0b',
+            '#2f2110',
+            '#92400e',
+            'white'
+            )"></div>
 
-            <div class="colorBtn" style="background:#ec4899"
-            onclick="changeTheme('#ec4899','#341524','#9d174d')"></div>
+            <div class="colorBtn"
+            style="background:#8b5cf6"
+            onclick="changeTheme(
+            '#8b5cf6',
+            '#1f1635',
+            '#5b21b6',
+            'white'
+            )"></div>
 
-            <div class="colorBtn" style="background:#14b8a6"
-            onclick="changeTheme('#14b8a6','#12302d','#0f766e')"></div>
-
-            <div class="colorBtn" style="background:#84cc16"
-            onclick="changeTheme('#84cc16','#243016','#4d7c0f')"></div>
-
-            <div class="colorBtn" style="background:#f97316"
-            onclick="changeTheme('#f97316','#331d11','#c2410c')"></div>
-
-            <div class="colorBtn" style="background:#ffffff"
-            onclick="changeTheme('#ffffff','#f3f4f6','#d1d5db','#111111')"></div>
+            <div class="colorBtn"
+            style="background:#ffffff"
+            onclick="changeTheme(
+            '#ffffff',
+            '#f3f4f6',
+            '#d1d5db',
+            '#111'
+            )"></div>
 
         </div>
 
@@ -462,27 +521,108 @@ body{
             SocraTech AI
         </div>
 
-        <button class="login-btn">
-            로그인
+        <button class="logout-btn"
+        onclick="logout()">
+
+            로그아웃
+
         </button>
 
     </div>
 
-    <div class="chat-area" id="chatArea"></div>
+    <div class="chat-area"
+    id="chatArea"></div>
 
-    <div class="choices" id="choices"></div>
+    <div class="choices"
+    id="choices"></div>
 
 </div>
 
 <script>
 
-const chatArea = document.getElementById("chatArea");
-const choicesDiv = document.getElementById("choices");
-const historyList = document.getElementById("historyList");
+const chatArea =
+document.getElementById("chatArea");
+
+const choicesDiv =
+document.getElementById("choices");
+
+const historyList =
+document.getElementById("historyList");
 
 let current = 0;
 let currentTone = "formal";
 let currentConversationHTML = "";
+
+/* 로그인 */
+
+function login(){
+
+    const username =
+    document.getElementById("username").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    if(username === "" || password === ""){
+
+        alert("아이디와 비밀번호를 입력하세요.");
+        return;
+
+    }
+
+    localStorage.setItem(
+        "socraUser",
+        username
+    );
+
+    localStorage.setItem(
+        "socraPass",
+        password
+    );
+
+    document.getElementById(
+        "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "userInfo"
+    ).innerHTML =
+    "👤 " + username + "님";
+
+}
+
+/* 자동 로그인 */
+
+window.onload = function(){
+
+    const savedUser =
+    localStorage.getItem("socraUser");
+
+    if(savedUser){
+
+        document.getElementById(
+            "loginScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "userInfo"
+        ).innerHTML =
+        "👤 " + savedUser + "님";
+
+    }
+
+}
+
+/* 로그아웃 */
+
+function logout(){
+
+    localStorage.removeItem("socraUser");
+    localStorage.removeItem("socraPass");
+
+    location.reload();
+
+}
 
 /* 질문 */
 
@@ -559,17 +699,22 @@ const steps = [
 
 ];
 
-/* 시작 화면 */
+/* 시작 */
 
 function showStartScreen(){
+
+    const username =
+    localStorage.getItem("socraUser") || "사용자";
 
     chatArea.innerHTML = `
 
     <div class="start-screen">
 
         <div class="start-title">
-            안녕하세요.<br>
+
+            안녕하세요, ${username}님.<br>
             오늘의 고민은 무엇인가요?
+
         </div>
 
         <div class="start-choices">
@@ -628,7 +773,7 @@ function applyTone(text){
 
 }
 
-/* 대화 시작 */
+/* 시작 */
 
 function startConversation(text){
 
@@ -656,14 +801,16 @@ function startConversation(text){
 
 function addMessage(text,type){
 
-    const msg = document.createElement("div");
+    const msg =
+    document.createElement("div");
 
     msg.classList.add("message");
     msg.classList.add(type);
 
     if(type === "bot"){
 
-        msg.innerHTML = applyTone(text);
+        msg.innerHTML =
+        applyTone(text);
 
     }else{
 
@@ -673,7 +820,8 @@ function addMessage(text,type){
 
     chatArea.appendChild(msg);
 
-    chatArea.scrollTop = chatArea.scrollHeight;
+    chatArea.scrollTop =
+    chatArea.scrollHeight;
 
 }
 
@@ -690,11 +838,15 @@ function showStep(){
 
     }
 
-    addMessage(steps[current].question,"bot");
+    addMessage(
+        steps[current].question,
+        "bot"
+    );
 
     steps[current].choices.forEach(choice=>{
 
-        const btn = document.createElement("button");
+        const btn =
+        document.createElement("button");
 
         btn.classList.add("choice-btn");
 
@@ -708,7 +860,10 @@ function showStep(){
 
             setTimeout(()=>{
 
-                addMessage(choice.reply,"bot");
+                addMessage(
+                    choice.reply,
+                    "bot"
+                );
 
                 current++;
 
@@ -728,11 +883,13 @@ function showStep(){
 
 }
 
-/* 랜덤 수치 */
+/* 랜덤 */
 
 function randomValue(){
 
-    return Math.floor(Math.random()*31)+60;
+    return Math.floor(
+        Math.random()*31
+    )+60;
 
 }
 
@@ -745,7 +902,8 @@ function showReport(){
     const flexible = randomValue();
     const meta = randomValue();
 
-    const report = document.createElement("div");
+    const report =
+    document.createElement("div");
 
     report.classList.add("report");
 
@@ -800,9 +958,11 @@ function showReport(){
 
 function saveConversation(){
 
-    currentConversationHTML = chatArea.innerHTML;
+    currentConversationHTML =
+    chatArea.innerHTML;
 
-    const item = document.createElement("div");
+    const item =
+    document.createElement("div");
 
     item.classList.add("history-item");
 
@@ -812,7 +972,9 @@ function saveConversation(){
 
     item.onclick = ()=>{
 
-        chatArea.innerHTML = currentConversationHTML;
+        chatArea.innerHTML =
+        currentConversationHTML;
+
         choicesDiv.innerHTML = "";
 
     };
@@ -835,20 +997,29 @@ function resetChat(){
 
 }
 
-/* 설정창 */
+/* 설정 */
 
 function toggleSettings(){
 
     const box =
     document.getElementById("settingsBox");
 
+    const btn =
+    document.getElementById("settingToggle");
+
     if(box.style.display === "block"){
 
         box.style.display = "none";
 
+        btn.innerHTML =
+        "⚙️ 설정 열기";
+
     }else{
 
         box.style.display = "block";
+
+        btn.innerHTML =
+        "⚙️ 설정 닫기";
 
     }
 
@@ -858,11 +1029,13 @@ function toggleSettings(){
 
 function changeBackground(event){
 
-    const file = event.target.files[0];
+    const file =
+    event.target.files[0];
 
     if(file){
 
-        const reader = new FileReader();
+        const reader =
+        new FileReader();
 
         reader.onload = function(e){
 
@@ -887,22 +1060,42 @@ function changeTone(tone){
 
 /* 테마 */
 
-function changeTheme(mainColor,bgColor,chatColor,textColor="white"){
+function changeTheme(
+mainColor,
+bgColor,
+chatColor,
+textColor="white"
+){
 
     document.documentElement.style
-    .setProperty('--main-color', mainColor);
+    .setProperty(
+        '--main-color',
+        mainColor
+    );
 
     document.documentElement.style
-    .setProperty('--background-color', bgColor);
+    .setProperty(
+        '--background-color',
+        bgColor
+    );
 
     document.documentElement.style
-    .setProperty('--sidebar-color', bgColor);
+    .setProperty(
+        '--sidebar-color',
+        bgColor
+    );
 
     document.documentElement.style
-    .setProperty('--chatbot-color', chatColor);
+    .setProperty(
+        '--chatbot-color',
+        chatColor
+    );
 
     document.documentElement.style
-    .setProperty('--text-color', textColor);
+    .setProperty(
+        '--text-color',
+        textColor
+    );
 
 }
 
