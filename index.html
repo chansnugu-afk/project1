@@ -16,10 +16,9 @@
 
 :root{
     --main-color:#10a37f;
-    --sidebar-color:#171717;
-    --topbar-color:#1f1f1f;
-    --chatbot-color:#2b2b2b;
     --background-color:#212121;
+    --sidebar-color:#1a1a1a;
+    --chatbot-color:#2b2b2b;
     --text-color:white;
 }
 
@@ -40,7 +39,7 @@ body{
 .sidebar{
     width:260px;
     background:var(--sidebar-color);
-    border-right:1px solid #333;
+    border-right:1px solid rgba(255,255,255,0.08);
     padding:15px;
     display:flex;
     flex-direction:column;
@@ -65,11 +64,11 @@ body{
 }
 
 .new-chat:hover{
-    opacity:0.8;
+    opacity:0.85;
 }
 
 .history-title{
-    color:#aaa;
+    color:#bdbdbd;
     margin-bottom:10px;
     font-size:14px;
 }
@@ -78,7 +77,7 @@ body{
     display:flex;
     flex-direction:column;
     gap:10px;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .history-item{
@@ -94,13 +93,42 @@ body{
     opacity:0.8;
 }
 
+/* 설정 버튼 */
+
+.setting-toggle{
+
+    margin-top:auto;
+    background:var(--chatbot-color);
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-bottom:10px;
+    transition:0.2s;
+
+}
+
+.setting-toggle:hover{
+
+    opacity:0.8;
+
+}
+
 /* 설정창 */
 
 .settings-box{
-    margin-top:auto;
+
+    display:none;
+
     background:var(--chatbot-color);
+
     padding:15px;
+
     border-radius:15px;
+
+    animation:fade 0.2s ease;
+
 }
 
 .settings-box h3{
@@ -110,22 +138,25 @@ body{
 .colorContainer{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
+    gap:10px;
     margin-bottom:20px;
 }
 
 .colorBtn{
-    width:28px;
-    height:28px;
+    width:30px;
+    height:30px;
     border-radius:50%;
     cursor:pointer;
     border:2px solid white;
 }
 
-select,
-input[type=file]{
+.settings-box p{
+    margin-bottom:8px;
+}
+
+.settings-box select,
+.settings-box input[type=file]{
     width:100%;
-    margin-top:8px;
     margin-bottom:18px;
     padding:10px;
     border:none;
@@ -144,13 +175,13 @@ input[type=file]{
 
 .topbar{
     height:70px;
-    background:var(--topbar-color);
-    border-bottom:1px solid #333;
+    background:rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:0 25px;
-    transition:0.3s;
 }
 
 .ai-name{
@@ -167,7 +198,7 @@ input[type=file]{
     cursor:pointer;
 }
 
-/* 채팅 */
+/* 채팅 영역 */
 
 .chat-area{
     flex:1;
@@ -216,7 +247,7 @@ input[type=file]{
 }
 
 .start-btn:hover{
-    opacity:0.8;
+    opacity:0.85;
     transform:translateY(-2px);
 }
 
@@ -255,8 +286,9 @@ input[type=file]{
 
 .choices{
     padding:20px;
-    border-top:1px solid #333;
-    background:var(--sidebar-color);
+    border-top:1px solid rgba(255,255,255,0.08);
+    background:rgba(0,0,0,0.15);
+    backdrop-filter:blur(10px);
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -340,26 +372,55 @@ input[type=file]{
 
     <div class="history-list" id="historyList"></div>
 
+    <!-- 설정 버튼 -->
+
+    <button class="setting-toggle"
+    onclick="toggleSettings()">
+
+    ⚙️ 설정 열기
+
+    </button>
+
     <!-- 설정창 -->
 
-    <div class="settings-box">
+    <div class="settings-box"
+    id="settingsBox">
 
         <h3>⚙️ 설정</h3>
 
-        <p>테마 색상</p>
+        <p>배경 색상</p>
 
         <div class="colorContainer">
 
-            <div class="colorBtn" style="background:#10a37f" onclick="changeTheme('#10a37f')"></div>
-            <div class="colorBtn" style="background:#3b82f6" onclick="changeTheme('#3b82f6')"></div>
-            <div class="colorBtn" style="background:#ef4444" onclick="changeTheme('#ef4444')"></div>
-            <div class="colorBtn" style="background:#f59e0b" onclick="changeTheme('#f59e0b')"></div>
-            <div class="colorBtn" style="background:#8b5cf6" onclick="changeTheme('#8b5cf6')"></div>
-            <div class="colorBtn" style="background:#ec4899" onclick="changeTheme('#ec4899')"></div>
-            <div class="colorBtn" style="background:#14b8a6" onclick="changeTheme('#14b8a6')"></div>
-            <div class="colorBtn" style="background:#84cc16" onclick="changeTheme('#84cc16')"></div>
-            <div class="colorBtn" style="background:#f97316" onclick="changeTheme('#f97316')"></div>
-            <div class="colorBtn" style="background:#ffffff" onclick="changeTheme('#ffffff')"></div>
+            <div class="colorBtn" style="background:#10a37f"
+            onclick="changeTheme('#10a37f','#10271f','#064e3b')"></div>
+
+            <div class="colorBtn" style="background:#3b82f6"
+            onclick="changeTheme('#3b82f6','#111c2f','#1d4ed8')"></div>
+
+            <div class="colorBtn" style="background:#ef4444"
+            onclick="changeTheme('#ef4444','#2a1111','#7f1d1d')"></div>
+
+            <div class="colorBtn" style="background:#f59e0b"
+            onclick="changeTheme('#f59e0b','#2f2110','#92400e')"></div>
+
+            <div class="colorBtn" style="background:#8b5cf6"
+            onclick="changeTheme('#8b5cf6','#1f1635','#5b21b6')"></div>
+
+            <div class="colorBtn" style="background:#ec4899"
+            onclick="changeTheme('#ec4899','#341524','#9d174d')"></div>
+
+            <div class="colorBtn" style="background:#14b8a6"
+            onclick="changeTheme('#14b8a6','#12302d','#0f766e')"></div>
+
+            <div class="colorBtn" style="background:#84cc16"
+            onclick="changeTheme('#84cc16','#243016','#4d7c0f')"></div>
+
+            <div class="colorBtn" style="background:#f97316"
+            onclick="changeTheme('#f97316','#331d11','#c2410c')"></div>
+
+            <div class="colorBtn" style="background:#ffffff"
+            onclick="changeTheme('#ffffff','#f3f4f6','#d1d5db','#111111')"></div>
 
         </div>
 
@@ -421,10 +482,9 @@ const historyList = document.getElementById("historyList");
 
 let current = 0;
 let currentTone = "formal";
-
 let currentConversationHTML = "";
 
-/* 질문 단계 */
+/* 질문 */
 
 const steps = [
 
@@ -545,7 +605,7 @@ function showStartScreen(){
 
 }
 
-/* 말투 적용 */
+/* 말투 */
 
 function applyTone(text){
 
@@ -592,7 +652,7 @@ function startConversation(text){
 
 }
 
-/* 메시지 추가 */
+/* 메시지 */
 
 function addMessage(text,type){
 
@@ -617,7 +677,7 @@ function addMessage(text,type){
 
 }
 
-/* 단계 진행 */
+/* 단계 */
 
 function showStep(){
 
@@ -627,6 +687,7 @@ function showStep(){
 
         showReport();
         return;
+
     }
 
     addMessage(steps[current].question,"bot");
@@ -667,7 +728,7 @@ function showStep(){
 
 }
 
-/* 랜덤 성장 그래프 */
+/* 랜덤 수치 */
 
 function randomValue(){
 
@@ -735,7 +796,7 @@ function showReport(){
 
 }
 
-/* 이전 대화 저장 */
+/* 저장 */
 
 function saveConversation(){
 
@@ -760,7 +821,7 @@ function saveConversation(){
 
 }
 
-/* 새 대화 */
+/* 초기화 */
 
 function resetChat(){
 
@@ -774,7 +835,26 @@ function resetChat(){
 
 }
 
-/* 배경 변경 */
+/* 설정창 */
+
+function toggleSettings(){
+
+    const box =
+    document.getElementById("settingsBox");
+
+    if(box.style.display === "block"){
+
+        box.style.display = "none";
+
+    }else{
+
+        box.style.display = "block";
+
+    }
+
+}
+
+/* 배경 */
 
 function changeBackground(event){
 
@@ -797,7 +877,7 @@ function changeBackground(event){
 
 }
 
-/* 말투 변경 */
+/* 말투 */
 
 function changeTone(tone){
 
@@ -805,52 +885,28 @@ function changeTone(tone){
 
 }
 
-/* 테마 변경 */
+/* 테마 */
 
-function changeTheme(color){
+function changeTheme(mainColor,bgColor,chatColor,textColor="white"){
 
     document.documentElement.style
-    .setProperty('--main-color', color);
+    .setProperty('--main-color', mainColor);
 
-    if(color === "#ffffff"){
+    document.documentElement.style
+    .setProperty('--background-color', bgColor);
 
-        document.documentElement.style
-        .setProperty('--background-color', '#f5f5f5');
+    document.documentElement.style
+    .setProperty('--sidebar-color', bgColor);
 
-        document.documentElement.style
-        .setProperty('--sidebar-color', '#e5e5e5');
+    document.documentElement.style
+    .setProperty('--chatbot-color', chatColor);
 
-        document.documentElement.style
-        .setProperty('--topbar-color', '#ffffff');
-
-        document.documentElement.style
-        .setProperty('--chatbot-color', '#d4d4d4');
-
-        document.documentElement.style
-        .setProperty('--text-color', '#111');
-
-    }else{
-
-        document.documentElement.style
-        .setProperty('--background-color', '#212121');
-
-        document.documentElement.style
-        .setProperty('--sidebar-color', '#171717');
-
-        document.documentElement.style
-        .setProperty('--topbar-color', '#1f1f1f');
-
-        document.documentElement.style
-        .setProperty('--chatbot-color', '#2b2b2b');
-
-        document.documentElement.style
-        .setProperty('--text-color', 'white');
-
-    }
+    document.documentElement.style
+    .setProperty('--text-color', textColor);
 
 }
 
-/* 최초 시작 */
+/* 시작 */
 
 showStartScreen();
 
