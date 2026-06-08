@@ -1,20 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>SocraTech AI</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 :root{
     --main-color:#10a37f;
     --background-color:#212121;
@@ -22,9 +14,8 @@
     --chatbot-color:#2b2b2b;
     --text-color:white;
 }
-
 body{
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:var(--background-color);
     color:var(--text-color);
     display:flex;
@@ -32,117 +23,40 @@ body{
     overflow:hidden;
     background-size:cover;
     background-position:center;
-    transition:0.3s;
+    transition:.3s;
 }
-
-/* 사이드바 */
-
 .sidebar{
     width:260px;
     background:var(--sidebar-color);
-    border-right:1px solid rgba(255,255,255,0.08);
+    border-right:1px solid rgba(255,255,255,.08);
     padding:15px;
     display:flex;
     flex-direction:column;
-    transition:0.3s;
 }
-
-.logo{
-    font-size:24px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-.new-chat{
+.logo{font-size:24px;font-weight:bold;margin-bottom:20px}
+.new-chat,.archive-btn,.setting-toggle{
     background:var(--chatbot-color);
     color:white;
     border:none;
     padding:14px;
     border-radius:12px;
     cursor:pointer;
-    margin-bottom:20px;
-    transition:0.2s;
+    margin-bottom:15px;
 }
-
-.new-chat:hover{
-    opacity:0.85;
-}
-
-.history-title{
+.archive-info{
     color:#bdbdbd;
-    margin-bottom:10px;
-    font-size:14px;
-}
-
-.history-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+    font-size:13px;
+    line-height:1.5;
     margin-bottom:15px;
 }
-
-.history-item{
-    background:var(--chatbot-color);
-    padding:12px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:0.2s;
-    font-size:14px;
-}
-
-.history-item:hover{
-    opacity:0.8;
-}
-
-/* 설정 버튼 */
-
-.setting-toggle{
-
-    margin-top:auto;
-    background:var(--chatbot-color);
-    color:white;
-    border:none;
-    padding:14px;
-    border-radius:12px;
-    cursor:pointer;
-    margin-bottom:10px;
-    transition:0.2s;
-
-}
-
-.setting-toggle:hover{
-
-    opacity:0.8;
-
-}
-
-/* 설정창 */
-
+.setting-toggle{margin-top:auto}
 .settings-box{
-
     display:none;
-
     background:var(--chatbot-color);
-
     padding:15px;
-
     border-radius:15px;
-
-    animation:fade 0.2s ease;
-
 }
-
-.settings-box h3{
-    margin-bottom:15px;
-}
-
-.colorContainer{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:20px;
-}
-
+.colorContainer{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
 .colorBtn{
     width:30px;
     height:30px;
@@ -150,57 +64,33 @@ body{
     cursor:pointer;
     border:2px solid white;
 }
-
-.settings-box p{
-    margin-bottom:8px;
-}
-
-.settings-box select,
-.settings-box input[type=file]{
+.settings-box p{margin-bottom:8px}
+.settings-box select,.settings-box input[type=file]{
     width:100%;
     margin-bottom:18px;
     padding:10px;
     border:none;
     border-radius:10px;
 }
-
-/* 메인 */
-
-.main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-}
-
-/* 상단바 */
-
+.main{flex:1;display:flex;flex-direction:column}
 .topbar{
     height:70px;
-    background:rgba(0,0,0,0.2);
+    background:rgba(0,0,0,.2);
     backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:0 25px;
 }
-
-.ai-name{
-    font-size:22px;
-    font-weight:bold;
-}
-
+.ai-name{font-size:22px;font-weight:bold}
 .login-btn{
     background:var(--main-color);
     border:none;
     color:white;
     padding:10px 18px;
     border-radius:10px;
-    cursor:pointer;
 }
-
-/* 채팅 영역 */
-
 .chat-area{
     flex:1;
     overflow-y:auto;
@@ -209,9 +99,6 @@ body{
     flex-direction:column;
     gap:20px;
 }
-
-/* 시작 화면 */
-
 .start-screen{
     height:100%;
     display:flex;
@@ -220,13 +107,7 @@ body{
     align-items:center;
     text-align:center;
 }
-
-.start-title{
-    font-size:42px;
-    font-weight:bold;
-    margin-bottom:40px;
-}
-
+.start-title{font-size:42px;font-weight:bold;margin-bottom:40px}
 .start-choices{
     width:100%;
     max-width:700px;
@@ -234,8 +115,7 @@ body{
     flex-direction:column;
     gap:15px;
 }
-
-.start-btn{
+.start-btn,.choice-btn{
     background:var(--chatbot-color);
     border:none;
     color:white;
@@ -243,81 +123,30 @@ body{
     border-radius:16px;
     cursor:pointer;
     text-align:left;
-    transition:0.2s;
     font-size:16px;
 }
-
-.start-btn:hover{
-    opacity:0.85;
-    transform:translateY(-2px);
-}
-
-/* 메시지 */
-
 .message{
     max-width:70%;
     padding:18px;
     border-radius:18px;
     line-height:1.7;
-    animation:fade 0.3s ease;
+    animation:fade .3s ease;
 }
-
-.bot{
-    background:var(--chatbot-color);
-    align-self:flex-start;
-}
-
-.user{
-    background:var(--main-color);
-    align-self:flex-end;
-}
-
-@keyframes fade{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* 선택지 */
-
+.bot{background:var(--chatbot-color);align-self:flex-start}
+.user{background:var(--main-color);align-self:flex-end}
 .choices{
     padding:20px;
-    border-top:1px solid rgba(255,255,255,0.08);
-    background:rgba(0,0,0,0.15);
-    backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.08);
+    background:rgba(0,0,0,.15);
     display:flex;
     flex-direction:column;
     gap:12px;
 }
-
-.choice-btn{
-    background:var(--chatbot-color);
-    color:white;
-    border:none;
-    padding:16px;
-    border-radius:14px;
-    cursor:pointer;
-    text-align:left;
-    transition:0.2s;
-}
-
-.choice-btn:hover{
-    opacity:0.8;
-}
-
-/* 리포트 */
-
 .report{
     background:var(--chatbot-color);
     padding:25px;
     border-radius:20px;
 }
-
 .bar{
     width:100%;
     height:18px;
@@ -326,615 +155,504 @@ body{
     overflow:hidden;
     margin-bottom:16px;
 }
-
-.fill{
-    height:100%;
-    background:var(--main-color);
+.fill{height:100%;background:var(--main-color)}
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:100;
 }
-
-/* 모바일 */
-
+.modal{
+    width:90%;
+    max-width:650px;
+    max-height:75vh;
+    overflow-y:auto;
+    background:#1f1f1f;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+.close-btn{
+    background:#333;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+}
+.archive-item{
+    background:#2b2b2b;
+    padding:15px;
+    border-radius:14px;
+    margin-bottom:12px;
+    cursor:pointer;
+}
+.archive-item:hover{background:#3a3a3a}
+.archive-date{
+    color:#aaa;
+    font-size:13px;
+    margin-top:6px;
+}
+.empty-archive{
+    color:#bbb;
+    text-align:center;
+    padding:30px;
+}
+@keyframes fade{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+}
 @media(max-width:768px){
-
-    .sidebar{
-        display:none;
-    }
-
-    .message{
-        max-width:90%;
-    }
-
-    .start-title{
-        font-size:30px;
-    }
-
+    .sidebar{display:none}
+    .message{max-width:90%}
+    .start-title{font-size:30px}
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- 사이드바 -->
-
 <div class="sidebar">
+    <div class="logo">SocraTech</div>
 
-    <div class="logo">
-        SocraTech
-    </div>
+    <button class="new-chat" onclick="resetChat()">+ 새 대화</button>
 
-    <button class="new-chat" onclick="resetChat()">
-        + 새 대화
+    <button class="archive-btn" onclick="openArchive()">
+        📚 생각 아카이브
     </button>
 
-    <div class="history-title">
-        이전 대화
+    <div class="archive-info">
+        완료된 대화는 이곳에 저장됩니다.<br>
+        아카이브에서 이전 대화를 다시 확인할 수 있습니다.
     </div>
 
-    <div class="history-list" id="historyList"></div>
-
-    <!-- 설정 버튼 -->
-
-    <button class="setting-toggle"
-    id="settingToggle"
-    onclick="toggleSettings()">
-
-    ⚙️ 설정 열기
-
+    <button class="setting-toggle" id="settingToggle" onclick="toggleSettings()">
+        ⚙️ 설정 열기
     </button>
 
-    <!-- 설정창 -->
-
-    <div class="settings-box"
-    id="settingsBox">
-
+    <div class="settings-box" id="settingsBox">
         <h3>⚙️ 설정</h3>
 
         <p>배경 색상</p>
-
         <div class="colorContainer">
-
-            <!-- 검정 기본 -->
-
-            <div class="colorBtn"
-            style="background:#212121"
-            onclick="changeTheme('#10a37f','#212121','#2b2b2b','white')"></div>
-
-            <!-- 기존 10개 색상 -->
-
-            <div class="colorBtn"
-            style="background:#10a37f"
-            onclick="changeTheme('#10a37f','#10271f','#064e3b','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#3b82f6"
-            onclick="changeTheme('#3b82f6','#111c2f','#1d4ed8','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#ef4444"
-            onclick="changeTheme('#ef4444','#2a1111','#7f1d1d','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#f59e0b"
-            onclick="changeTheme('#f59e0b','#2f2110','#92400e','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#8b5cf6"
-            onclick="changeTheme('#8b5cf6','#1f1635','#5b21b6','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#ec4899"
-            onclick="changeTheme('#ec4899','#341524','#9d174d','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#14b8a6"
-            onclick="changeTheme('#14b8a6','#12302d','#0f766e','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#84cc16"
-            onclick="changeTheme('#84cc16','#243016','#4d7c0f','white')"></div>
-
-            <div class="colorBtn"
-            style="background:#f97316"
-            onclick="changeTheme('#f97316','#331d11','#c2410c','white')"></div>
-
+            <div class="colorBtn" style="background:#212121" onclick="changeTheme('#10a37f','#212121','#2b2b2b','white')"></div>
+            <div class="colorBtn" style="background:#10a37f" onclick="changeTheme('#10a37f','#10271f','#064e3b','white')"></div>
+            <div class="colorBtn" style="background:#3b82f6" onclick="changeTheme('#3b82f6','#111c2f','#1d4ed8','white')"></div>
+            <div class="colorBtn" style="background:#ef4444" onclick="changeTheme('#ef4444','#2a1111','#7f1d1d','white')"></div>
+            <div class="colorBtn" style="background:#f59e0b" onclick="changeTheme('#f59e0b','#2f2110','#92400e','white')"></div>
+            <div class="colorBtn" style="background:#8b5cf6" onclick="changeTheme('#8b5cf6','#1f1635','#5b21b6','white')"></div>
+            <div class="colorBtn" style="background:#ec4899" onclick="changeTheme('#ec4899','#341524','#9d174d','white')"></div>
+            <div class="colorBtn" style="background:#14b8a6" onclick="changeTheme('#14b8a6','#12302d','#0f766e','white')"></div>
+            <div class="colorBtn" style="background:#84cc16" onclick="changeTheme('#84cc16','#243016','#4d7c0f','white')"></div>
+            <div class="colorBtn" style="background:#f97316" onclick="changeTheme('#f97316','#331d11','#c2410c','white')"></div>
         </div>
 
         <p>배경 사진</p>
-
-        <input type="file"
-        accept="image/*"
-        onchange="changeBackground(event)">
+        <input type="file" accept="image/*" onchange="changeBackground(event)">
 
         <p>챗봇 말투</p>
-
         <select onchange="changeTone(this.value)">
-
-            <option value="formal">
-                예의있게
-            </option>
-
-            <option value="kind">
-                상냥하게
-            </option>
-
-            <option value="friendly">
-                친근하게
-            </option>
-
+            <option value="formal">예의있게</option>
+            <option value="kind">상냥하게</option>
+            <option value="friendly">친근하게</option>
         </select>
-
     </div>
-
 </div>
 
-<!-- 메인 -->
-
 <div class="main">
-
     <div class="topbar">
-
-        <div class="ai-name">
-            SocraTech AI
-        </div>
-
-        <button class="login-btn">
-            로그인
-        </button>
-
+        <div class="ai-name">SocraTech AI</div>
+        <button class="login-btn">로그인</button>
     </div>
 
     <div class="chat-area" id="chatArea"></div>
-
     <div class="choices" id="choices"></div>
+</div>
 
+<div class="modal-bg" id="archiveModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>📚 나의 생각 아카이브</h2>
+            <button class="close-btn" onclick="closeArchive()">닫기</button>
+        </div>
+
+        <div id="archiveList"></div>
+    </div>
 </div>
 
 <script>
+const chatArea=document.getElementById("chatArea");
+const choicesDiv=document.getElementById("choices");
+const archiveModal=document.getElementById("archiveModal");
+const archiveList=document.getElementById("archiveList");
 
-const chatArea = document.getElementById("chatArea");
-const choicesDiv = document.getElementById("choices");
-const historyList = document.getElementById("historyList");
+let current=0;
+let currentTone="formal";
+let archiveConversations=[];
 
-let current = 0;
-let currentTone = "formal";
-let currentConversationHTML = "";
+let score={
+    critical:50,
+    literacy:50,
+    flexible:50,
+    meta:50
+};
 
-/* 질문 */
-
-const steps = [
-
+const steps=[
 {
     question:"그 문제의 가장 큰 원인은 무엇이라고 생각하나요?",
-
     choices:[
-
         {
             text:"자신감 부족",
-            reply:"그렇다면 질문자님이 생각하는 자신감 있는 사람은 어떤 사람인가요?"
+            reply:"그렇다면 질문자님이 생각하는 자신감 있는 사람은 어떤 사람인가요?",
+            score:{critical:7,literacy:9,flexible:5,meta:10}
         },
-
         {
             text:"실패 경험",
-            reply:"과거의 실패가 현재의 선택 기준까지 결정하고 있는 걸까요?"
+            reply:"과거의 실패가 현재의 선택 기준까지 결정하고 있는 걸까요?",
+            score:{critical:10,literacy:5,flexible:8,meta:7}
         },
-
         {
             text:"주변 환경",
-            reply:"같은 환경에서도 다른 결과를 만드는 사람도 있지 않을까요?"
+            reply:"같은 환경에서도 다른 결과를 만드는 사람도 있지 않을까요?",
+            score:{critical:9,literacy:4,flexible:11,meta:6}
         }
-
     ]
 },
-
 {
     question:"지금 가장 바꾸고 싶은 것은 무엇인가요?",
-
     choices:[
-
         {
             text:"생각 습관",
-            reply:"평소 어떤 순간에 깊게 고민하지 않고 결론을 내려버리나요?"
+            reply:"평소 어떤 순간에 깊게 고민하지 않고 결론을 내려버리나요?",
+            score:{critical:11,literacy:5,flexible:6,meta:10}
         },
-
         {
             text:"행동 방식",
-            reply:"가장 먼저 바꿀 수 있는 아주 작은 행동 하나는 무엇일까요?"
+            reply:"가장 먼저 바꿀 수 있는 아주 작은 행동 하나는 무엇일까요?",
+            score:{critical:6,literacy:4,flexible:8,meta:11}
         },
-
         {
             text:"감정 조절",
-            reply:"감정이 가장 크게 흔들리는 상황은 어떤 순간인가요?"
+            reply:"감정이 가장 크게 흔들리는 상황은 어떤 순간인가요?",
+            score:{critical:5,literacy:7,flexible:7,meta:12}
         }
-
     ]
 },
-
 {
     question:"지금 당신에게 가장 필요한 것은 무엇인가요?",
-
     choices:[
-
         {
             text:"명확한 목표",
-            reply:"그 목표는 정말 본인의 선택인가요?"
+            reply:"그 목표는 정말 본인의 선택인가요?",
+            score:{critical:9,literacy:6,flexible:5,meta:10}
         },
-
         {
             text:"휴식",
-            reply:"충분히 쉬지 못하게 만드는 가장 큰 이유는 무엇인가요?"
+            reply:"충분히 쉬지 못하게 만드는 가장 큰 이유는 무엇인가요?",
+            score:{critical:5,literacy:6,flexible:8,meta:11}
         },
-
         {
             text:"새로운 도전",
-            reply:"실패 가능성이 있어도 도전하고 싶은 이유는 무엇인가요?"
+            reply:"실패 가능성이 있어도 도전하고 싶은 이유는 무엇인가요?",
+            score:{critical:7,literacy:5,flexible:12,meta:8}
         }
-
     ]
 }
-
 ];
 
-/* 시작 화면 */
-
 function showStartScreen(){
-
-    chatArea.innerHTML = `
-
+    chatArea.innerHTML=`
     <div class="start-screen">
-
         <div class="start-title">
             안녕하세요.<br>
             오늘의 고민은 무엇인가요?
         </div>
 
         <div class="start-choices">
-
-            <button class="start-btn"
-            onclick="startConversation('진로가 너무 불안해요')">
-
+            <button class="start-btn" onclick="startConversation('진로가 너무 불안해요','career')">
                 진로가 너무 불안해요
-
             </button>
 
-            <button class="start-btn"
-            onclick="startConversation('공부 의욕이 없어요')">
-
+            <button class="start-btn" onclick="startConversation('공부 의욕이 없어요','study')">
                 공부 의욕이 없어요
-
             </button>
 
-            <button class="start-btn"
-            onclick="startConversation('인간관계가 힘들어요')">
-
+            <button class="start-btn" onclick="startConversation('인간관계가 힘들어요','relationship')">
                 인간관계가 힘들어요
-
             </button>
-
         </div>
-
     </div>
-
     `;
 
-    choicesDiv.innerHTML = "";
-
+    choicesDiv.innerHTML="";
 }
 
-/* 말투 */
+function startConversation(text,type){
+    chatArea.innerHTML="";
+    addMessage(text,"user");
 
-function applyTone(text){
-
-    if(currentTone === "kind"){
-
-        return "😊 " + text +
-        " 천천히 생각해봐도 좋아요.";
-
+    if(type==="career"){
+        score.critical+=8;
+        score.meta+=7;
     }
 
-    if(currentTone === "friendly"){
+    if(type==="study"){
+        score.meta+=10;
+        score.literacy+=5;
+    }
 
-        return "😄 " + text
-        .replaceAll("무엇인가요?", "뭘까?")
-        .replaceAll("있을까요?", "있을까?");
+    if(type==="relationship"){
+        score.flexible+=10;
+        score.meta+=6;
+    }
 
+    setTimeout(()=>{
+        addMessage("흥미롭네요. 그런데 정말 완벽한 해결책이 존재한다고 생각하시나요?","bot");
+        setTimeout(()=>showStep(),700);
+    },500);
+}
+
+function applyTone(text){
+    if(currentTone==="kind"){
+        return "😊 "+text+" 천천히 생각해봐도 좋아요.";
+    }
+
+    if(currentTone==="friendly"){
+        return "😄 "+text
+        .replaceAll("무엇인가요?","뭘까?")
+        .replaceAll("있을까요?","있을까?")
+        .replaceAll("생각하시나요?","생각해?");
     }
 
     return text;
-
 }
-
-/* 대화 시작 */
-
-function startConversation(text){
-
-    chatArea.innerHTML = "";
-
-    addMessage(text,"user");
-
-    setTimeout(()=>{
-
-        addMessage(
-        "흥미롭네요. 그런데 정말 완벽한 해결책이 존재한다고 생각하시나요?",
-        "bot");
-
-        setTimeout(()=>{
-
-            showStep();
-
-        },700);
-
-    },500);
-
-}
-
-/* 메시지 */
 
 function addMessage(text,type){
+    const msg=document.createElement("div");
+    msg.classList.add("message",type);
 
-    const msg = document.createElement("div");
-
-    msg.classList.add("message");
-    msg.classList.add(type);
-
-    if(type === "bot"){
-
-        msg.innerHTML = applyTone(text);
-
+    if(type==="bot"){
+        msg.innerHTML=applyTone(text);
     }else{
-
-        msg.innerHTML = text;
-
+        msg.innerHTML=text;
     }
 
     chatArea.appendChild(msg);
-
-    chatArea.scrollTop = chatArea.scrollHeight;
-
+    chatArea.scrollTop=chatArea.scrollHeight;
 }
 
-/* 단계 */
-
 function showStep(){
+    choicesDiv.innerHTML="";
 
-    choicesDiv.innerHTML = "";
-
-    if(current >= steps.length){
-
+    if(current>=steps.length){
         showReport();
         return;
-
     }
 
     addMessage(steps[current].question,"bot");
 
     steps[current].choices.forEach(choice=>{
-
-        const btn = document.createElement("button");
-
+        const btn=document.createElement("button");
         btn.classList.add("choice-btn");
+        btn.innerText=choice.text;
 
-        btn.innerText = choice.text;
-
-        btn.onclick = ()=>{
-
+        btn.onclick=()=>{
+            addScore(choice.score);
             addMessage(choice.text,"user");
-
-            choicesDiv.innerHTML = "";
+            choicesDiv.innerHTML="";
 
             setTimeout(()=>{
-
                 addMessage(choice.reply,"bot");
-
                 current++;
 
-                setTimeout(()=>{
-
-                    showStep();
-
-                },700);
-
+                setTimeout(()=>showStep(),700);
             },500);
-
         };
 
         choicesDiv.appendChild(btn);
-
     });
-
 }
 
-/* 랜덤 수치 */
-
-function randomValue(){
-
-    return Math.floor(Math.random()*31)+60;
-
+function addScore(s){
+    score.critical+=s.critical;
+    score.literacy+=s.literacy;
+    score.flexible+=s.flexible;
+    score.meta+=s.meta;
 }
 
-/* 리포트 */
+function limitScore(value){
+    if(value>100) return 100;
+    if(value<0) return 0;
+    return value;
+}
+
+function getStrongestArea(){
+    const areas=[
+        {name:"비판적 사고력",value:score.critical},
+        {name:"문해력",value:score.literacy},
+        {name:"인지적 유연성",value:score.flexible},
+        {name:"메타인지",value:score.meta}
+    ];
+
+    areas.sort((a,b)=>b.value-a.value);
+    return areas[0].name;
+}
 
 function showReport(){
+    const critical=limitScore(score.critical);
+    const literacy=limitScore(score.literacy);
+    const flexible=limitScore(score.flexible);
+    const meta=limitScore(score.meta);
+    const strongest=getStrongestArea();
 
-    const critical = randomValue();
-    const literacy = randomValue();
-    const flexible = randomValue();
-    const meta = randomValue();
-
-    const report = document.createElement("div");
-
+    const report=document.createElement("div");
     report.classList.add("report");
 
-    report.innerHTML = `
-
-        <h2 style="margin-bottom:20px;">
-            🧠 나의 상위 인지 성장 리포트
-        </h2>
+    report.innerHTML=`
+        <h2 style="margin-bottom:20px;">🧠 나의 상위 인지 성장 리포트</h2>
 
         <p style="margin-bottom:20px;">
-            당신은 문제를 감정이 아닌,
-            원인과 행동 관점에서 분석하기 시작했습니다.
+            이번 대화에서 가장 크게 자극된 영역은
+            <b>${strongest}</b>입니다.
+            선택한 답변을 바탕으로 문제를 감정이 아닌 원인, 정의, 행동 가능성의 관점에서 다시 바라보았습니다.
         </p>
 
         <p>비판적 사고력 (${critical}%)</p>
-
-        <div class="bar">
-            <div class="fill"
-            style="width:${critical}%"></div>
-        </div>
+        <div class="bar"><div class="fill" style="width:${critical}%"></div></div>
 
         <p>문해력 (${literacy}%)</p>
-
-        <div class="bar">
-            <div class="fill"
-            style="width:${literacy}%"></div>
-        </div>
+        <div class="bar"><div class="fill" style="width:${literacy}%"></div></div>
 
         <p>인지적 유연성 (${flexible}%)</p>
-
-        <div class="bar">
-            <div class="fill"
-            style="width:${flexible}%"></div>
-        </div>
+        <div class="bar"><div class="fill" style="width:${flexible}%"></div></div>
 
         <p>메타인지 (${meta}%)</p>
-
-        <div class="bar">
-            <div class="fill"
-            style="width:${meta}%"></div>
-        </div>
-
+        <div class="bar"><div class="fill" style="width:${meta}%"></div></div>
     `;
 
     chatArea.appendChild(report);
-
-    saveConversation();
-
+    saveToArchive(strongest);
 }
 
-/* 저장 */
+function saveToArchive(strongest){
+    const now=new Date();
 
-function saveConversation(){
-
-    currentConversationHTML = chatArea.innerHTML;
-
-    const item = document.createElement("div");
-
-    item.classList.add("history-item");
-
-    item.innerText =
-    "소크라테스 대화 #" +
-    (historyList.children.length + 1);
-
-    item.onclick = ()=>{
-
-        chatArea.innerHTML = currentConversationHTML;
-        choicesDiv.innerHTML = "";
-
-    };
-
-    historyList.prepend(item);
-
+    archiveConversations.unshift({
+        title:"소크라테스 대화 #" + (archiveConversations.length+1),
+        date:now.toLocaleString("ko-KR"),
+        summary:"주요 성장 영역: " + strongest,
+        html:chatArea.innerHTML
+    });
 }
 
-/* 초기화 */
+function openArchive(){
+    archiveModal.style.display="flex";
+    renderArchiveList();
+}
+
+function closeArchive(){
+    archiveModal.style.display="none";
+}
+
+function renderArchiveList(){
+    archiveList.innerHTML="";
+
+    if(archiveConversations.length===0){
+        archiveList.innerHTML=`
+            <div class="empty-archive">
+                아직 저장된 대화가 없습니다.<br>
+                대화를 끝까지 진행하면 이곳에 저장됩니다.
+            </div>
+        `;
+        return;
+    }
+
+    archiveConversations.forEach((conversation,index)=>{
+        const item=document.createElement("div");
+        item.classList.add("archive-item");
+
+        item.innerHTML=`
+            <strong>${conversation.title}</strong>
+            <div class="archive-date">${conversation.date}</div>
+            <div class="archive-date">${conversation.summary}</div>
+        `;
+
+        item.onclick=()=>{
+            chatArea.innerHTML=conversation.html;
+            choicesDiv.innerHTML="";
+            closeArchive();
+        };
+
+        archiveList.appendChild(item);
+    });
+}
 
 function resetChat(){
+    current=0;
 
-    current = 0;
+    score={
+        critical:50,
+        literacy:50,
+        flexible:50,
+        meta:50
+    };
 
-    chatArea.innerHTML = "";
-
-    choicesDiv.innerHTML = "";
-
+    chatArea.innerHTML="";
+    choicesDiv.innerHTML="";
     showStartScreen();
-
 }
-
-/* 설정창 */
 
 function toggleSettings(){
+    const box=document.getElementById("settingsBox");
+    const btn=document.getElementById("settingToggle");
 
-    const box =
-    document.getElementById("settingsBox");
-
-    const btn =
-    document.getElementById("settingToggle");
-
-    if(box.style.display === "block"){
-
-        box.style.display = "none";
-
-        btn.innerHTML =
-        "⚙️ 설정 열기";
-
+    if(box.style.display==="block"){
+        box.style.display="none";
+        btn.innerHTML="⚙️ 설정 열기";
     }else{
-
-        box.style.display = "block";
-
-        btn.innerHTML =
-        "⚙️ 설정 닫기";
-
+        box.style.display="block";
+        btn.innerHTML="⚙️ 설정 닫기";
     }
-
 }
-
-/* 배경 */
 
 function changeBackground(event){
-
-    const file = event.target.files[0];
+    const file=event.target.files[0];
 
     if(file){
+        const reader=new FileReader();
 
-        const reader = new FileReader();
-
-        reader.onload = function(e){
-
-            document.body.style.backgroundImage =
-            `url(${e.target.result})`;
-
-        }
+        reader.onload=function(e){
+            document.body.style.backgroundImage=`url(${e.target.result})`;
+        };
 
         reader.readAsDataURL(file);
-
     }
-
 }
-
-/* 말투 */
 
 function changeTone(tone){
-
-    currentTone = tone;
-
+    currentTone=tone;
 }
-
-/* 테마 */
 
 function changeTheme(mainColor,bgColor,chatColor,textColor="white"){
+    document.documentElement.style.setProperty("--main-color",mainColor);
+    document.documentElement.style.setProperty("--background-color",bgColor);
+    document.documentElement.style.setProperty("--sidebar-color",bgColor);
+    document.documentElement.style.setProperty("--chatbot-color",chatColor);
+    document.documentElement.style.setProperty("--text-color",textColor);
 
-    document.documentElement.style
-    .setProperty('--main-color', mainColor);
-
-    document.documentElement.style
-    .setProperty('--background-color', bgColor);
-
-    document.documentElement.style
-    .setProperty('--sidebar-color', bgColor);
-
-    document.documentElement.style
-    .setProperty('--chatbot-color', chatColor);
-
-    document.documentElement.style
-    .setProperty('--text-color', textColor);
-
+    document.body.style.backgroundImage="none";
 }
 
-/* 시작 */
-
 showStartScreen();
-
 </script>
 
 </body>
